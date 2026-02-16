@@ -13,9 +13,10 @@ DEVICE = None
 
 def parse_args():
     parser = argparse.ArgumentParser(description='train MNIST data for study')
-    parser.add_argument('--BatchSize','-bs',dest='bs',type=int,default=1024)
-    parser.add_argument('--epochs',type=int,default=50)
+    parser.add_argument('--BatchSize','-bs',dest='bs',type=int,default=512)
+    parser.add_argument('--epochs',type=int,default=10)
     parser.add_argument('--learningRate','-lr',dest='lr',default=1e-3)
+    parser.add_argument('--savePath',type=str,default=None)
 
     return parser.parse_args()
 
@@ -83,3 +84,6 @@ if __name__ == '__main__':
             test_accuracy = 100. * correct / len(test_dataloader.dataset)
             
             print(f'[EPOCH: {epoch}], Test Loss:{test_loss:.4f},Test Accuracy: {test_accuracy:.2f}')
+    
+    if args.savePath is not None:
+        torch.save(model.state_dict(),args.savePath)
